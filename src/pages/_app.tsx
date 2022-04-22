@@ -1,8 +1,22 @@
-import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { ThemeProvider } from 'next-themes';
+
+import globalStyles from '~/theme/globalStyles';
+import { darkTheme } from '~/theme/config';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
-  return <Component {...pageProps} />;
+  globalStyles();
+
+  return (
+    <ThemeProvider
+      disableTransitionOnChange
+      attribute='class'
+      defaultTheme='system'
+      value={{ light: 'light-theme', dark: darkTheme.toString() }}
+    >
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
 };
 
 export default MyApp;
