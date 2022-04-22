@@ -9,6 +9,13 @@ const globalStyles = globalCss({
     outline: 'none',
     scrollBehavior: 'smooth',
   },
+
+  body: {
+    fontFamily: '$body',
+    fontSize: '$base',
+    color: '$highContrastText',
+    backgroundColor: '$appBackground',
+  },
 });
 
 export default globalStyles;
