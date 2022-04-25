@@ -29,4 +29,6 @@ const Heading = styled('h2', {
   },
 });
 
+Heading.displayName = 'Heading';
+
 export default Heading;
