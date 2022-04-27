@@ -1,10 +1,9 @@
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'next-themes';
 
+import AuthProvider from '~/context/AuthContext';
 import globalStyles from '~/theme/globalStyles';
 import { darkTheme } from '~/theme/config';
-import { AuthProvider } from '~/lib/auth';
-import supabase from '~/lib/supabaseClient';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   globalStyles();
@@ -16,7 +15,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       defaultTheme='system'
       value={{ light: 'light-theme', dark: darkTheme.toString() }}
     >
-      <AuthProvider supabase={supabase}>
+      <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
     </ThemeProvider>
