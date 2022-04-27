@@ -13,9 +13,6 @@ const useAuth = () => {
       const { error } = await supabase.auth.signIn({ email, password });
 
       if (error) console.error(error);
-
-      // @ts-ignore
-      // authDispatch({ type: SIGN_IN, payload: supabase.auth.session() });
     } catch (error) {
       console.error(error);
     }
