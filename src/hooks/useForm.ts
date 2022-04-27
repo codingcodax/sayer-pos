@@ -6,7 +6,7 @@ const useForm = (initialState = {}) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setValues({ ...values, [e.target.id]: e.target.value });
 
-  return [values, handleChange];
+  return [values, handleChange] as const;
 };
 
 export default useForm;
