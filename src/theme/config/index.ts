@@ -24,6 +24,7 @@ export const {
     space: { ...spaceTokens },
     fontWeights: {
       normal: 400,
+      medium: 500,
       bold: 700,
     },
     lineHeights: {
@@ -49,7 +50,7 @@ export const {
       full: '9999px',
     },
     shadows: {
-      focus: '0 0 0 5px var(--colors-violet4)',
+      focus: '0 0 0 5px var(--colors-primary4)',
     },
     zIndices: {
       hide: -1,
