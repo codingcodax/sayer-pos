@@ -16,6 +16,10 @@ const globalStyles = globalCss({
     color: '$highContrastText',
     backgroundColor: '$appBackground',
   },
+
+  '#__next': {
+    height: '100vh',
+  },
 });
 
 export default globalStyles;
