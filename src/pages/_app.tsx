@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import AuthProvider from '~/context/AuthContext';
 import globalStyles from '~/theme/globalStyles';
 import { darkTheme } from '~/theme/config';
+import { Page } from '~/components/layouts';
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   globalStyles();
@@ -16,7 +17,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       value={{ light: 'light-theme', dark: darkTheme.toString() }}
     >
       <AuthProvider>
-        <Component {...pageProps} />
+        <Page>
+          <Component {...pageProps} />
+        </Page>
       </AuthProvider>
     </ThemeProvider>
   );
