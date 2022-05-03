@@ -1,8 +1,17 @@
-const Layout = () => {
+import { FC, ReactNode } from 'react';
+
+import { Nav } from '~/components/containers';
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
-      <p>Layout component</p>
-    </div>
+    <>
+      <Nav />
+      {children}
+    </>
   );
 };
 
