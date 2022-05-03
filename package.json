@@ -12,6 +12,7 @@
     "commit": "npx cz"
   },
   "dependencies": {
+    "@prisma/client": "^3.13.0",
     "@radix-ui/colors": "^0.1.8",
     "@radix-ui/react-label": "^0.1.5",
     "@radix-ui/react-separator": "^0.1.4",
