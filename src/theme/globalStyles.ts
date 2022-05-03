@@ -19,6 +19,9 @@ const globalStyles = globalCss({
 
   '#__next': {
     height: '100vh',
+    display: 'grid',
+    gridTemplate: '1fr / auto 1fr',
+    columnGap: '$8',
   },
 });
 
