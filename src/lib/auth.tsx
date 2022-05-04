@@ -1,4 +1,12 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { Session, SupabaseClient } from '@supabase/supabase-js';
+import cookie from 'js-cookie';
 
 export const EVENTS = {
   PASSWORD_RECOVERY: 'PASSWORD_RECOVERY',
@@ -14,21 +22,29 @@ export const VIEWS = {
   UPDATE_PASSWORD: 'update_password',
 };
 
-export const AuthContext = createContext(null);
+export const AuthContext = createContext({});
 
-export const AuthProvider = ({ supabase, ...props }) => {
-  const [session, setSession] = useState(null);
-  const [user, setUser] = useState(null);
+export const AuthProvider = ({
+  supabase,
+  children,
+}: {
+  supabase: SupabaseClient;
+  children: ReactNode;
+}) => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<Session | null>(null);
   const [, setView] = useState(VIEWS.SIGN_IN);
 
   useEffect(() => {
     const activeSession = supabase.auth.session();
     setSession(activeSession);
+    // @ts-ignore
     setUser(activeSession?.user ?? null);
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
         setSession(currentSession);
+        // @ts-ignore
         setUser(currentSession?.user ?? null);
 
         switch (event) {
@@ -49,19 +65,25 @@ export const AuthProvider = ({ supabase, ...props }) => {
           credentials: 'same-origin',
           body: JSON.stringify({ event, session: currentSession }),
         }).then((res) => res.json());
+
+        cookie.set('sayer-pos-auth', 'true', { expires: 1 });
       }
     );
 
     return () => {
       authListener?.unsubscribe();
     };
-  }, []);
+  }, [supabase.auth]);
+
+  const signOut = () => {
+    supabase.auth.signOut();
+    cookie.remove('sayer-pos-auth');
+  };
 
   return (
-    <AuthContext.Provider
-      value={{ session, user, signOut: () => supabase.auth.signOut() }}
-      {...props}
-    />
+    <AuthContext.Provider value={{ session, user, signOut }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
