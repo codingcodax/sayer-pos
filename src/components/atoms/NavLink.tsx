@@ -27,7 +27,9 @@ const NavLink: FC<NavLinkProps> = ({ href, name, children }) => {
         >
           {children}
           {name && (
-            <Text css={{ fontSize: '$md', color: '$lowContrastText' }}>
+            <Text
+              css={{ mt: '$2', fontSize: '$md', color: '$lowContrastText' }}
+            >
               {name}
             </Text>
           )}
