@@ -14,7 +14,7 @@ const globalStyles = globalCss({
     fontFamily: '$body',
     fontSize: '$base',
     color: '$highContrastText',
-    backgroundColor: '$appBackground',
+    backgroundColor: '$subtleAppBackground',
   },
 
   '#__next': {
