@@ -15,8 +15,8 @@ const Nav = () => {
     <Grid
       css={{
         p: '$4',
-        pr: '$0',
-        maxWidth: '100px',
+        // maxWidth: '100px',
+        bg: '$appBackground',
         alignContent: 'space-between',
       }}
     >
