@@ -9,31 +9,126 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model BookSuggestion {
+model Product {
   id Int @id @default(autoincrement())
-  bookTitle  String
-  bookAuthor String
-  bookGenre String
+  name String @db.VarChar(50)
+  description String @db.MediumText
+  slug String @db.VarChar(50) @unique
+  typeName String @db.VarChar(20) @map("type_name")
+  type Type @relation(fields: [typeName], references: [name])
+  categoryName String @db.VarChar(50) @map("category_name")
+  category Category @relation(fields: [categoryName], references: [name])
+  lineName String @db.VarChar(50) @map("line_name")
+  line Line @relation(fields: [lineName], references: [name])
+  subProducts SubProduct[]
+  medias ProductMedia[]
+  colors ProductColor[]
+  sizes ProductSize[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@map("products")
 }
 
-model Colors {
-  name String @id
-  css_code String
+model SubProduct {
+  barcode String @db.VarChar(30) @id
+  name String @db.VarChar(30)
+  code String @db.VarChar(10)
+  price Decimal
+  stock Int
+  minStock Int @map("min_stock")
+  productId Int @map("product_id")
+  product Product @relation(fields: [productId], references: [id])
+  colorName String @db.VarChar(50) @map("color_name")
+  color Color @relation(fields: [colorName], references: [name])
+  sizeName String @db.VarChar(20) @map("size_name")
+  size Size @relation(fields: [sizeName], references: [name])
+  mediaName String? @db.VarChar(50) @map("media_name")
+  media Media? @relation(fields: [mediaName], references: [name])
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@map("sub_products")
 }
 
-model Sizes {
-  name String @id
-  number Int
+model Media {
+  name String @db.VarChar(50) @id
+  url String @unique
+  blurUrl String? @unique @map("blur_url")
+  altText String @map("alt_text")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  products ProductMedia[]
+  subProducts SubProduct[]
+  
+  @@map("media")
 }
 
-model Lines {
-  name String @id
+model Color {
+  name String @db.VarChar(50) @id
+  cssCode String @db.VarChar(100) @map("css_code")
+  products ProductColor[]
+  subProducts SubProduct[]
+
+  @@map("colors")
 }
 
-model Categories {
-  name String @id
+model Size {
+  name String @db.VarChar(20) @id
+  number String @db.VarChar(2)
+  products ProductSize[]
+  subProducts SubProduct[]
+
+  @@map("sizes")
 }
 
-model Types {
-  name String @id
+model Line {
+  name String @db.VarChar(50) @id
+  products Product[]
+
+  @@map("lines")
+}
+
+model Category {
+  name String @db.VarChar(50) @id
+  products Product[]
+
+  @@map("categories")
+}
+
+model Type {
+  name String @db.VarChar(20) @id
+  products Product[]
+
+  @@map("types")
+}
+
+model ProductMedia {
+  productId Int @map("product_id")
+  mediaName String @db.VarChar(50) @map("media_name")
+  product Product @relation(fields: [productId], references: [id])
+  media Media @relation(fields: [mediaName], references: [name])
+
+  @@id([productId, mediaName])
+  @@map("product_media")
+}
+
+model ProductColor {
+  productId Int @map("product_id")
+  colorName String @db.VarChar(50) @map("color_name")
+  product Product @relation(fields: [productId], references: [id])
+  color Color @relation(fields: [colorName], references: [name])
+
+  @@id([productId, colorName])
+  @@map("product_color")
+}
+
+model ProductSize {
+  productId Int @map("product_id")
+  sizeName String @db.VarChar(20) @map("size_name")
+  product Product @relation(fields: [productId], references: [id])
+  size Size @relation(fields: [sizeName], references: [name])
+
+  @@id([productId, sizeName])
+  @@map("product_size")
 }
