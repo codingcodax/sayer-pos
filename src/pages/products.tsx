@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { GetStaticProps } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { Category } from '@prisma/client';
 
 import prisma from '~/lib/prisma';
@@ -15,7 +14,7 @@ interface ProductsProps {
   categories: Category[];
 }
 
-const Products: FC<ProductsProps> = ({ categories }) => {
+const Products: NextPage<ProductsProps> = ({ categories }) => {
   console.log(categories);
 
   return (
