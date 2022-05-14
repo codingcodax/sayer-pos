@@ -1,4 +1,6 @@
+import { FC } from 'react';
 import { GetStaticProps } from 'next';
+import { Category } from '@prisma/client';
 
 import prisma from '~/lib/prisma';
 import { ChooseCategory } from '~/components/containers';
@@ -9,7 +11,11 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { categories } };
 };
 
-const Products = ({ categories }) => {
+interface ProductsProps {
+  categories: Category[];
+}
+
+const Products: FC<ProductsProps> = ({ categories }) => {
   console.log(categories);
 
   return (
