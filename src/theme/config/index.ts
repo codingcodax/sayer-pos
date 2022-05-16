@@ -68,7 +68,7 @@ export const {
       tooltip: 1800,
     },
     transitions: {
-      normal: '0.2s',
+      normal: 'all 0.2s ease-out',
     },
   },
   media: {
