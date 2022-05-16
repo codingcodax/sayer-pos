@@ -14,7 +14,8 @@ const Nav = () => {
   return (
     <Grid
       css={{
-        p: '$4',
+        py: '$8',
+        px: '$4',
         // maxWidth: '100px',
         bg: '$appBackground',
         alignContent: 'space-between',
