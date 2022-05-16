@@ -1,28 +1,59 @@
 import { GetStaticProps, NextPage } from 'next';
-import { Category } from '@prisma/client';
+import { useRouter } from 'next/router';
 
 import prisma from '~/lib/prisma';
-import { ChooseCategory } from '~/components/containers';
+import { ChooseType } from '~/components/containers';
+import { Grid } from '~/components/ui';
+
+type Product = {
+  id: number;
+  slug: string;
+  name: string;
+  typeName: string;
+};
 
 export const getStaticProps: GetStaticProps = async () => {
-  const categories = await prisma.category.findMany();
+  const data = await prisma.type.findMany({
+    include: {
+      products: {
+        select: {
+          id: true,
+          slug: true,
+          name: true,
+          typeName: true,
+        },
+      },
+    },
+  });
 
-  return { props: { categories } };
+  const types = ['todos'];
+  const products: Product[] = [];
+
+  data.map((type) => types.push(type.name));
+  data.map((type) => type.products.map((product) => products.push(product)));
+
+  return { props: { types, products } };
 };
 
 interface ProductsProps {
-  categories: Category[];
+  types: string[];
+  products: Product[];
 }
 
-const Products: NextPage<ProductsProps> = ({ categories }) => {
-  console.log(categories);
+const Products: NextPage<ProductsProps> = ({ types, products }) => {
+  const { query } = useRouter();
+  const typeSelected = query.type || 'todos';
+
+  console.log(query);
 
   return (
-    <div>
-      <ChooseCategory />
-      <p>Products</p>
+    <Grid css={{ gridTemplateColumns: '2fr 1fr' }}>
+      <div>
+        <ChooseType typeSelected={typeSelected} types={types} />
+        <p>Products</p>
+      </div>
       <p>Basquet</p>
-    </div>
+    </Grid>
   );
 };
 
