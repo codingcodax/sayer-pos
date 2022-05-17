@@ -2,8 +2,11 @@ import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import prisma from '~/lib/prisma';
-import { ChooseType } from '~/components/containers';
 import { Grid } from '~/components/ui';
+import {
+  ChooseType,
+  Products as ProductsContainer,
+} from '~/components/containers';
 
 type Product = {
   id: number;
@@ -21,6 +24,9 @@ export const getStaticProps: GetStaticProps = async () => {
           slug: true,
           name: true,
           typeName: true,
+          medias: {
+            select: { media: { select: { url: true, altText: true } } },
+          },
         },
       },
     },
@@ -50,7 +56,7 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
     <Grid css={{ gridTemplateColumns: '2fr 1fr' }}>
       <div>
         <ChooseType typeSelected={typeSelected} types={types} />
-        <p>Products</p>
+        <ProductsContainer />
       </div>
       <p>Basquet</p>
     </Grid>
