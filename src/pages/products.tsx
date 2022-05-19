@@ -1,6 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import { Product } from '~/@types';
 import prisma from '~/lib/prisma';
 import { Grid } from '~/components/ui';
 import {
@@ -8,35 +9,22 @@ import {
   Products as ProductsContainer,
 } from '~/components/containers';
 
-type Product = {
-  id: number;
-  slug: string;
-  name: string;
-  typeName: string;
-};
-
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await prisma.type.findMany({
-    include: {
-      products: {
-        select: {
-          id: true,
-          slug: true,
-          name: true,
-          typeName: true,
-          medias: {
-            select: { media: { select: { url: true, altText: true } } },
-          },
-        },
-      },
+  const products: Product[] = await prisma.product.findMany({
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      typeName: true,
+      medias: { include: { media: { select: { url: true, altText: true } } } },
     },
   });
 
-  const types = ['todos'];
-  const products: Product[] = [];
+  const typeRaw = await prisma.type.findMany({});
 
-  data.map((type) => types.push(type.name));
-  data.map((type) => type.products.map((product) => products.push(product)));
+  const types = ['todos'];
+
+  typeRaw.map((type) => types.push(type.name));
 
   return { props: { types, products } };
 };
@@ -50,13 +38,16 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
   const { query } = useRouter();
   const typeSelected = query.type || 'todos';
 
-  console.log(query);
+  const filteredProducts =
+    typeSelected === 'todos'
+      ? products
+      : products.filter((product) => product.typeName === typeSelected);
 
   return (
     <Grid css={{ gridTemplateColumns: '2fr 1fr' }}>
       <div>
         <ChooseType typeSelected={typeSelected} types={types} />
-        <ProductsContainer />
+        <ProductsContainer products={filteredProducts} type={typeSelected} />
       </div>
       <p>Basquet</p>
     </Grid>
