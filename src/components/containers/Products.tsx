@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { Product as ProductType } from '~/@types';
 import { Product } from '~/components/atoms';
-import { Box, Text, Heading, Grid } from '~/components/ui';
+import { Box, Flex, Text, Heading, Grid } from '~/components/ui';
 
 interface ProductsProps {
   products: ProductType[];
@@ -12,12 +12,16 @@ interface ProductsProps {
 const Products: FC<ProductsProps> = ({ products, type }) => {
   return (
     <Box>
-      <Box>
-        <Heading as='h2' css={{ textTransform: 'capitalize' }}>
+      <Flex align='center' css={{ mb: '$6' }} justify='space-between'>
+        <Heading
+          as='h2'
+          css={{ textTransform: 'capitalize' }}
+          variant='sub-title'
+        >
           {type}
         </Heading>
-        <Text>{products.length}</Text>
-      </Box>
+        <Text variant='secondary-text'>{products.length} Resultados</Text>
+      </Flex>
 
       <Grid css={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '$4' }}>
         {products.map(({ id, name, medias }) => (
