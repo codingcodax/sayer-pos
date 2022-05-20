@@ -7,6 +7,11 @@ const Heading = styled('h2', {
   lineHeight: '$normal',
 
   variants: {
+    variant: {
+      title: { fontSize: '$4xl', fontWeight: '$bold' },
+      'sub-title': { fontSize: '$2xl', fontWeight: '$medium' },
+    },
+
     size: {
       sm: { fontSize: '$sm' },
       md: { fontSize: '$sm' },

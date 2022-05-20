@@ -6,6 +6,10 @@ const Text = styled('p', {
   lineHeight: '$normal',
 
   variants: {
+    variant: {
+      'secondary-text': { fontSize: '$sm', color: '$lowContrastText' },
+    },
+
     size: {
       sm: { fontSize: '$sm' },
       md: { fontSize: '$md' },
