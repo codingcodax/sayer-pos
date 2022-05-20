@@ -15,7 +15,13 @@ const ChooseType: FC<ChooseTypesProps> = ({ types, typeSelected }) => {
         Elige una categoria
       </Heading>
       <Grid
-        css={{ mt: '$6', mb: '$8', columnGap: '$4', justifyContent: 'start' }}
+        css={{
+          mt: '$6',
+          pb: '$8',
+          columnGap: '$4',
+          justifyContent: 'start',
+          overflowX: 'auto',
+        }}
         direction='horizontal'
       >
         {types.map((type) => (
