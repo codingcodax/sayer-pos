@@ -18,8 +18,10 @@ const Type: FC<TypeProps> = ({ type, typeSelected }) => {
           px: '$6',
           w: '$min',
           textDecoration: 'none',
-          bg: type === typeSelected ? '$primary6' : '$appBackground',
-          border: '1px solid $normalBorder',
+          bg: type === typeSelected ? '$primary3' : '$appBackground',
+          border: `1px solid ${
+            type === typeSelected ? '$primary6' : '$normalBorder'
+          }`,
           borderRadius: '$md',
           transition: '$normal',
           transitionProperty: 'background-color, border-color',
@@ -32,8 +34,8 @@ const Type: FC<TypeProps> = ({ type, typeSelected }) => {
           },
 
           '&:hover': {
-            bg: '$subtleAppBackground',
-            borderColor: '$hoveredBorder',
+            bg: type === typeSelected ? '$primary3' : '$subtleAppBackground',
+            borderColor: type === typeSelected ? '$primary6' : '$hoveredBorder',
           },
 
           '&:hover>p': {
