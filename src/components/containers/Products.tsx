@@ -23,7 +23,7 @@ const Products: FC<ProductsProps> = ({ products, type }) => {
         <Text variant='secondary-text'>{products.length} Resultados</Text>
       </Flex>
 
-      <Grid css={{ gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '$4' }}>
+      <Grid css={{ gridTemplateColumns: '1fr 1fr 1fr', gap: '$4' }}>
         {products.map(({ id, name, medias }) => (
           <Product
             key={id}
