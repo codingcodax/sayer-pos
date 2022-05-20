@@ -11,7 +11,7 @@ interface ChooseTypesProps {
 const ChooseType: FC<ChooseTypesProps> = ({ types, typeSelected }) => {
   return (
     <Box>
-      <Heading as='h1' css={{ mt: '$8' }}>
+      <Heading as='h1' css={{ mt: '$8' }} variant='title'>
         Elige una categoria
       </Heading>
       <Grid

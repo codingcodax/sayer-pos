@@ -41,7 +41,9 @@ const Type: FC<TypeProps> = ({ type, typeSelected }) => {
           },
         }}
       >
-        <Text css={{ textTransform: 'capitalize' }}>{type}</Text>
+        <Text css={{ textTransform: 'capitalize' }} variant='secondary-text'>
+          {type}
+        </Text>
       </Center>
     </Link>
   );
