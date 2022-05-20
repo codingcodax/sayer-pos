@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { Product } from '~/@types';
 import prisma from '~/lib/prisma';
-import { Grid } from '~/components/ui';
+import { Box, Grid } from '~/components/ui';
 import {
   ChooseType,
   Products as ProductsContainer,
@@ -44,12 +44,16 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
       : products.filter((product) => product.typeName === typeSelected);
 
   return (
-    <Grid css={{ gridTemplateColumns: '2fr 1fr' }}>
-      <div>
+    <Grid css={{ gridTemplate: 'auto 1fr / 1fr 1fr 1fr' }}>
+      <Box css={{ gridColumn: '1 / span 2', overflowX: 'hidden' }}>
         <ChooseType typeSelected={typeSelected} types={types} />
+      </Box>
+      <Box css={{ gridColumn: '1 / span 2' }}>
         <ProductsContainer products={filteredProducts} type={typeSelected} />
-      </div>
-      <p>Basquet</p>
+      </Box>
+      <Box>
+        <p>Basquet</p>
+      </Box>
     </Grid>
   );
 };
