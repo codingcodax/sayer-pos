@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { Product as ProductType } from '~/@types';
 import { Box, Flex, Text, Heading } from '~/components/ui';
+import { Products as ProductsContainer } from '~/components/containers';
 
 interface ProductsProps {
   products: ProductType[];
@@ -21,6 +22,8 @@ const Products: FC<ProductsProps> = ({ products, type }) => {
         </Heading>
         <Text variant='secondary-text'>{products.length} Resultados</Text>
       </Flex>
+
+      <ProductsContainer products={products} />
     </Box>
   );
 };
