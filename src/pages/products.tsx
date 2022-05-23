@@ -4,10 +4,7 @@ import { useRouter } from 'next/router';
 import { Product } from '~/@types';
 import prisma from '~/lib/prisma';
 import { Box, Grid } from '~/components/ui';
-import {
-  ChooseType,
-  Products as ProductsContainer,
-} from '~/components/sections';
+import { ChooseType, Products as ProductsSection } from '~/components/sections';
 
 export const getStaticProps: GetStaticProps = async () => {
   const products: Product[] = await prisma.product.findMany({
@@ -49,7 +46,7 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
         <ChooseType typeSelected={typeSelected} types={types} />
       </Box>
       <Box css={{ gridColumn: '1 / span 2' }}>
-        <ProductsContainer products={filteredProducts} type={typeSelected} />
+        <ProductsSection products={filteredProducts} type={typeSelected} />
       </Box>
       <Box>
         <p>Basquet</p>
