@@ -7,7 +7,7 @@ import { Box, Grid } from '~/components/ui';
 import {
   ChooseType,
   Products as ProductsContainer,
-} from '~/components/containers';
+} from '~/components/sections';
 
 export const getStaticProps: GetStaticProps = async () => {
   const products: Product[] = await prisma.product.findMany({
