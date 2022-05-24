@@ -32,7 +32,7 @@ const Nav = () => {
           <HomeIcon css={{ h: '$8' }} />
         </NavLink>
 
-        <NavLink href='/products' name='Productos'>
+        <NavLink href='/products?type=todos' name='Productos'>
           <ShopIcon css={{ h: '$8' }} />
         </NavLink>
 
