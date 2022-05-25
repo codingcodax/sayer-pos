@@ -4,16 +4,21 @@ import { useRouter } from 'next/router';
 import { Product } from '~/@types';
 import prisma from '~/lib/prisma';
 import { Box, Grid } from '~/components/ui';
-import { ChooseType, Products as ProductsSection } from '~/components/sections';
-import ProductToAdd from '~/components/containers/ProductToAdd';
+import {
+  ChooseType,
+  Products as ProductsSection,
+  ProductToAdd,
+} from '~/components/sections';
 
 export const getStaticProps: GetStaticProps = async () => {
   const products: Product[] = await prisma.product.findMany({
     select: {
       id: true,
       name: true,
+      description: true,
       slug: true,
       typeName: true,
+      sizes: { include: { size: true } },
       medias: { include: { media: { select: { url: true, altText: true } } } },
     },
   });
@@ -43,6 +48,8 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
       ? products
       : products.filter((product) => product.typeName === typeSelected);
 
+  const productSelected = products.filter((p) => p.slug === product)[0];
+
   return (
     <Grid css={{ gridTemplate: 'auto 1fr / 1fr 1fr 1fr' }}>
       <Box css={{ gridArea: '1 / 1 / 2 / 3', overflowX: 'hidden' }}>
@@ -52,8 +59,8 @@ const Products: NextPage<ProductsProps> = ({ types, products }) => {
         <ProductsSection products={filteredProducts} type={typeSelected} />
       </Box>
       {product && (
-        <Box css={{ gridArea: '1 / 2 / 3 / 3' }}>
-          <ProductToAdd />
+        <Box css={{ gridArea: '1 / 2 / 3 / 3', zIndex: 2 }}>
+          <ProductToAdd product={productSelected} />
         </Box>
       )}
       <Box css={{ gridArea: '1 / 3 / 3 / 4' }}>
